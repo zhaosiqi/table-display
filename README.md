@@ -1,3 +1,5 @@
+[效果预览https://zhaosiqi.github.io/table-display/WebRoot/viewdisplay.html](https://zhaosiqi.github.io/table-display/WebRoot/viewdisplay.html)
+
 # table-display  
 
 大屏展示，兼容不同设备分辨率，数据获取，前台分页，自动轮播，table表格双色行等  
@@ -10,7 +12,7 @@
 需求如图，大部分类似  
   
   
-![blockchain](https://github.com/zhaosiqi/table-display/blob/master/WebRoot/images/aa.png "需求")  
+![blockchain](https://zhaosiqi.github.io/table-display/WebRoot/images/aa.png "需求")  
 1. 要求样式如下，表格单双行  
 2. 要求兼容不同分辨率的设备  
 3. 要求数据及时刷新，自动填充，轮换等  
