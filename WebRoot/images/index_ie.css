@@ -1,0 +1,4 @@
+.banner_ui .banner_cont{background-image:url("banner_bg1_ie.png")/*tpa=http://www.17sucai.com/preview/170321/2014-08-11/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/images/banner_bg1_ie.png*/}
+.banner_logo .banner_cont{background-image:url("banner_bg2_ie.jpg")/*tpa=http://www.17sucai.com/preview/170321/2014-08-11/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/images/banner_bg2_ie.jpg*/}
+.banner_lighting .banner_cont{background:url("banner_bg3_ie.jpg")/*tpa=http://www.17sucai.com/preview/170321/2014-08-11/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2/images/banner_bg3_ie.jpg*/ no-repeat center 0;}
+.ban1_anim_txt,.ban2_anim_txt,.ban3_anim_txt,.ban1_anim_bg,.ban2_anim_bg_logo,.ban2_anim_bg_line,.ban2_icon_1 span,.s1,.s2,.ban2_icon_3 span,.ban3_anim_bg_lightning,.ban3_anim_bg_boom,.ban3_anim_bg_boom_icon_l,.ban3_anim_bg_boom_icon_r,.ban3_act_bg,.ban3_mask{ background:none; display:none}

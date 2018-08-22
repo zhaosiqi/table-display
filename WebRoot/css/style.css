@@ -1,0 +1,6 @@
+#box{width:300px; height:0px; position: absolute; border:1px solid #ccc; -webkit-box-shadow:2px 2px 5px black; left:0px; bottom:0px; border-radius:5px; filter:alpha(opacity:0); opacity:0; background-image: url('../img/01.jpg'); background-repeat: no-repeat; z-index:1000;}
+.title{width:300px; height:20px; position: absolute; border-bottom: 1px solid #ccc; background:#ccc; cursor:move; background-image:url('../img/bg.png')}
+#close {width:auto; height:auto; cursor: pointer; z-index: 1; position: absolute; right:0px; top:0px; cursor:move}
+#close a{text-decoration: none; color:white; float:right; margin-right:5px; line-height:20px; vertical-align: middle; font-size: 12px;}
+.cbox{position: absolute; border:1px dashed #999; border-radius: 5px;}
+.info{width:500px;margin:0 auto;}/* 酷站代码整理 转载请注明出处 http://www.5icool.org */

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物流信息展示屏</title>
+    <style>
+        body,html{margin:0;padding:0;width: 100%;height:100%;}
+        .mainview{width: 100%;height:100%;}
+        table,thead,tbody{margin: 0;padding: 0;border-collapse:collapse;}
+        .bordered{width: 100%;height:100%;}
+        .tr{height: 4rem;background: #00adee;}
+        .th{width: 10%;height: 4rem;padding:0;display: block;float: left;border-right: 1px solid black;}
+        tr th{box-sizing:border-box;text-align: center;color: #ffffff;font-size: 0.97rem;}
+        .twolines{width: 100%;height: 50%;line-height: 2rem;}
+        .twolines span{width: 50%;height: 100%;float: left;box-sizing:border-box;line-height: 2rem;}
+        .spanborder{border-right: 1px solid black;}
+        .lineheight{line-height: 4rem;}
+        .even{background-color:#04243E;}
+        .odd{background-color:#0F4480;}
+        .count{width:100%;height: 2rem;}
+        tr td{height: 2rem;display: block;float: left;text-align: center;box-sizing:border-box;color: #ffffff;line-height: 2rem;font-size: 0.97rem;}
+        .tdwidthone{width: 10%;}
+        .tdwidthtwo{width: 5%;}
+    </style>
+</head>
+<body>
+<!--屏幕显示区域-->
+<div class="mainview">
+    <table class="bordered"  style="table-layout:fixed;">
+        <thead>
+            <tr class="tr">
+                <th class="th lineheight" id="width2">分拨中心</th>
+                <th class="th lineheight" id="width3">车牌</th>
+                <th class="th" id="width5">
+                    <div class="twolines" style="border-bottom: 1px solid black;">一期</div>
+                    <div class="twolines">
+                        <span class="spanborder">排序</span>
+                        <span>时间</span>
+                    </div>
+                </th>
+                <th class="th" id="width5">
+                    <div class="twolines" style="border-bottom: 1px solid black;">三期</div>
+                    <div class="twolines">
+                        <span class="spanborder">排序</span>
+                        <span>时间</span>
+                    </div>
+                </th>
+                <th class="th" id="width5">
+                    <div class="twolines" style="border-bottom: 1px solid black;">仪表</div>
+                    <div class="twolines">
+                        <span class="spanborder">排序</span>
+                        <span>时间</span>
+                    </div>
+                </th>
+                <th class="th" id="width5">
+                    <div class="twolines" style="border-bottom: 1px solid black;">智能</div>
+                    <div class="twolines">
+                        <span class="spanborder">排序</span>
+                        <span>时间</span>
+                    </div>
+                </th>
+                <th class="th" id="width5">
+                    <div class="twolines" style="border-bottom: 1px solid black;">滨海</div>
+                    <div class="twolines">
+                        <span class="spanborder">排序</span>
+                        <span>时间</span>
+                    </div>
+                </th>
+                <th class="th lineheight" id="width2">实装件数</th>
+                <th class="th lineheight" id="width3">实装吨数</th>
+                <th class="th lineheight" id="width4">核载吨数</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="js/jquery-1.8.2.min.js"></script>
+<script>
+    //px转换rem，响应式兼容规格不同的显示屏幕
+    function resize (originSize,type){
+        var type=type ||"x" ;
+        var widths=document.documentElement.clientWidth;
+        var heights=document.documentElement.clientHeight;
+        if(type=="x"){
+            var scale=widths/originSize*1000;
+        }else if(type=="y"){
+            var scale=heights/originSize*1000;
+        }
+        document.getElementsByTagName("html")[0].style.fontSize=scale+"px";
+    }
+    var equipmentheight = window.screen.height;
+    window.onload=function(equipmentheight){
+        resize(equipmentheight,"y");
+    }
+</script>
+<script>
+    $(function () {
+        var messageCur = 1;
+        var totalMessagePage = 0;
+        //分页
+        function goPage(table, pno, psize) { //table:具体表格   pno：当前页面  psize
+            var num = table.find('.count').length; //表格所有行数(所有记录数)
+            var pageSize = psize; //每页显示行数
+            var totalPage = 0;
+            //总共分几页
+            if(num / pageSize > parseInt(num / pageSize)) {
+                totalPage = parseInt(num / pageSize) + 1;
+            } else {
+                totalPage = parseInt(num / pageSize);
+            }
+            //		    console.log('总共有'+totalPage+'页');
+
+            //设置当前页面
+            curPage = pno;
+            //		    console.log('当前显示'+curPage+'页');
+            //$('#ce1').html(curPage);当前页
+            //$('#ce2').html(totalPage);总数页
+            var startRow = (curPage - 1) * pageSize + 1; //开始显示的行
+            var endRow = curPage * pageSize; //结束显示的行
+            endRow = (endRow > num) ? num : endRow;
+            //遍历显示数据实现分页
+            for(var i = 1; i < (num + 1); i++) {
+                var irow = table.find('.count').eq(i - 1);
+                var irow1 = irow.next();
+                if(i >= startRow && i <= endRow) {
+                    irow.show();
+                    irow1.show();
+                } else {
+                    irow.hide();
+                    irow1.hide();
+                }
+            }
+            return {
+                "totalPage": totalPage,
+                "curPage": curPage
+            };
+        }
+        //自动轮播控制
+        function freshPage() {
+            var tBodyHtml = $('.mainview').find('tbody');
+            setInterval(function() {
+                if(messageCur == totalMessagePage) {
+                    messageCur = 1;
+                } else {
+                    messageCur++;
+                }
+                goPage(tBodyHtml, messageCur, 12);
+            }, 10000);
+        }
+        //请求数据方法
+        function messageListFresh() {
+            $.ajax({
+                url:"data.json",
+                dataType:"json",
+                async:true,
+                type:"GET",
+                success: function(data) {
+                    //console.log(data);
+                    //获取数据添加到表格中
+                    var tBodyHtml = $('.mainview').find('tbody');
+                    tBodyHtml.empty();//移除节点，重新获取渲染
+                    var rows = data.resultList;
+                    for(var i = 0; i < rows.length; i++) {
+                        var tbBody = "";
+                        //table--隔行换色
+                        var trColor;
+                        if (i % 2 == 0) {
+                            trColor = "even";
+                        }else {
+                            trColor = "odd";
+                        }
+                        tbBody += "<tr class='count " + trColor + "'>" +
+                            "<td class='tdwidthone'>" + rows[i].province + "</td>" +
+                            "<td class='tdwidthone'>" + rows[i].licenseplate + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].onesort + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].onetime + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].twosort + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].twotime + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].metersort + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].metertime + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].intelligencesort + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].intelligencetime + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].binhaisort + "</td>" +
+                            "<td class='tdwidthtwo'>" + rows[i].binhaitime + "</td>" +
+                            "<td class='tdwidthone'>" + rows[i].realnumber + "</td>" +
+                            "<td class='tdwidthone'>" + rows[i].realtonnage + "</td>" +
+                            "<td class='tdwidthone'>" + rows[i].nucleartonnage + "</td>" +
+                            "</tr>";
+                        $("table tbody").append(tbBody);
+                    }
+
+                    //最后一页不够的补齐
+                    var addtrCount = 12 - rows.length % 12;
+                    if(addtrCount != 12) {
+                        for(var j = 0; j < addtrCount; j++) {
+                            tBodyHtml.append(
+                                "<tr class='count " + trColor + "'>" +
+                                "<td class='tdwidthone'>&nbsp;</td>" +
+                                "<td class='tdwidthone'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthtwo'>&nbsp;</td>" +
+                                "<td class='tdwidthone'>&nbsp;</td>" +
+                                "<td class='tdwidthone'>&nbsp;</td>" +
+                                "<td class='tdwidthone'>&nbsp;</td>" +
+                                "</tr>"
+                                );
+                        }
+                    }
+                    $("tbody tr:odd").addClass("odd");
+                    $("tbody tr:even").addClass("even");
+                    var reData;
+                    reData = goPage(tBodyHtml, 1, 12);
+                    totalMessagePage = reData.totalPage;
+                    meetingCur = reData.curPage;
+                    freshPage();
+                },
+                dataType: "json",
+                error: function() {
+                    //请求不到数据时，页面grid也要存在赋值
+                }
+            });
+        }
+        messageListFresh();
+    })
+</script>
+</html>
